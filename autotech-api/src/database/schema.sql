@@ -1,0 +1,25 @@
+CREATE TABLE IF NOT EXISTS artigos (
+  id SERIAL PRIMARY KEY,
+  slug VARCHAR(255) UNIQUE NOT NULL,
+  titulo VARCHAR(255) NOT NULL,
+  descricao TEXT NOT NULL,
+  categoria VARCHAR(50) NOT NULL,
+  tempo_leitura VARCHAR(50) NOT NULL,
+  visualizacoes VARCHAR(20) NOT NULL,
+  imagem VARCHAR(255) NOT NULL,
+  conteudo TEXT NOT NULL,
+  autor VARCHAR(100) NOT NULL,
+  data VARCHAR(20) NOT NULL,
+  criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_artigos_categoria ON artigos(categoria);
+CREATE INDEX IF NOT EXISTS idx_artigos_slug ON artigos(slug);
+
+CREATE TABLE IF NOT EXISTS usuarios (
+  id SERIAL PRIMARY KEY,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  senha VARCHAR(255) NOT NULL,
+  nome VARCHAR(100) NOT NULL,
+  criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
