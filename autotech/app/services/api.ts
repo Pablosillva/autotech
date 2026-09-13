@@ -20,29 +20,40 @@ export async function buscarArtigos(categoria?: string): Promise<Artigo[]> {
     ? `${API_URL}/artigos/categoria/${categoria}`
     : `${API_URL}/artigos`;
 
-  const resposta = await fetch(url, { cache: "no-store" });
+  try {
+    const resposta = await fetch(url, { cache: "no-store" });
 
-  if (!resposta.ok) {
-    throw new Error("Erro ao buscar artigos");
+    if (!resposta.ok) {
+      console.error("Erro na API:", resposta.status);
+      return [];
+    }
+
+    return resposta.json();
+  } catch (erro) {
+    console.error("Falha ao conectar na API:", erro);
+    return [];
   }
-
-  return resposta.json();
 }
 
 export async function buscarArtigo(slug: string): Promise<Artigo | null> {
-  const resposta = await fetch(`${API_URL}/artigos/${slug}`, {
-    cache: "no-store",
-  });
+  try {
+    const resposta = await fetch(`${API_URL}/artigos/${slug}`, {
+      cache: "no-store",
+    });
 
-  if (resposta.status === 404) {
+    if (resposta.status === 404) {
+      return null;
+    }
+
+    if (!resposta.ok) {
+      return null;
+    }
+
+    return resposta.json();
+  } catch (erro) {
+    console.error("Falha ao conectar na API:", erro);
     return null;
   }
-
-  if (!resposta.ok) {
-    throw new Error("Erro ao buscar artigo");
-  }
-
-  return resposta.json();
 }
 
 // ============ AUTENTICAÇÃO ============
