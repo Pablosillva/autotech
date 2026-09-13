@@ -1,7 +1,7 @@
 "use client";
 
-import AdminGuard from "../../../../components/admin/AdminGuard";
-import ArtigoForm from "../../../../components/admin/ArtigoForm";
+import AdminGuard from "../../../components/admin/AdminGuard";
+import ArtigoForm from "../../../components/admin/ArtigoForm";
 
 export default function NovoArtigoPage() {
   return (
