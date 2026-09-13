@@ -1,5 +1,12 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
 
+if (typeof window !== "undefined" && !process.env.NEXT_PUBLIC_API_URL) {
+  console.warn(
+    "⚠️ NEXT_PUBLIC_API_URL não está definida! Usando fallback:",
+    API_URL
+  );
+}
 export type Artigo = {
   id: number;
   slug: string;
