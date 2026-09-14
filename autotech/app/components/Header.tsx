@@ -42,7 +42,7 @@ export default function Header() {
           </a>
           <a href="/categoria/mecanica" className="hover:text-orange-500 transition">Mecânica</a>
           <a href="/categoria/funilaria" className="hover:text-orange-500 transition">Funilaria</a>
-          <a href="/categoria/diagnosmax-wtico" className="hover:text-orange-500 transition">Diagnóstico</a>
+          <a href="/categoria/diagnostico" className="hover:text-orange-500 transition">Diagnóstico</a>
           <a href="/categoria/carros" className="hover:text-orange-500 transition">Carros</a>
           <a href="/categoria/ferramentas" className="hover:text-orange-500 transition">Ferramentas</a>
           <a href="/categoria/noticias" className="hover:text-orange-500 transition">Notícias</a>
