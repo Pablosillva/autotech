@@ -3,8 +3,8 @@ const categorias = [
   { nome: "Funilaria", icone: "🎨", href: "/categoria/funilaria" },
   { nome: "Diagnóstico", icone: "📟", href: "/categoria/diagnostico" },
   { nome: "Carros", icone: "🚗", href: "/categoria/carros" },
-  { nome: "Ferramentas", icone: "🛠️", href: "/categoria/ferramentas" },
-  { nome: "Calculadoras", icone: "🧮", href: "/categoria/calculadoras" },
+  { nome: "Ferramentas", icone: "🛠️", href: "/ferramentas" },
+  { nome: "Calculadoras", icone: "🧮", href: "/calculadoras" },
 ];
 
 export default function CategoriesSection() {
