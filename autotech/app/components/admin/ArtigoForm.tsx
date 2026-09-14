@@ -9,6 +9,7 @@ import {
   Artigo,
   ArtigoInput,
 } from "../../services/api";
+import UploadImagem from "./UploadImagem";
 
 const categorias = [
   { valor: "mecanica", nome: "Mecânica" },
@@ -195,18 +196,25 @@ export default function ArtigoForm({ artigo }: { artigo?: Artigo }) {
 
       <div>
         <label className="text-sm text-gray-400 block mb-2">
-          Caminho da imagem
+          Imagem do artigo
         </label>
-        <input
-          type="text"
-          value={form.imagem}
-          onChange={(e) => atualizarCampo("imagem", e.target.value)}
-          placeholder="/artigo-exemplo.png"
-          className="w-full bg-gray-950 border border-gray-800 focus:border-orange-500 outline-none text-white px-3 py-2.5 rounded-lg transition"
-        />
-        <p className="text-gray-600 text-xs mt-1">
-          Coloque o arquivo na pasta <code className="text-orange-500">public/</code> e use o caminho <code className="text-orange-500">/nome.png</code>
-        </p>
+        <div className="flex gap-3 items-center">
+          <input
+            type="text"
+            value={form.imagem}
+            onChange={(e) => atualizarCampo("imagem", e.target.value)}
+            placeholder="/artigo-exemplo.png ou URL do Cloudinary"
+            className="flex-1 bg-gray-950 border border-gray-800 focus:border-orange-500 outline-none text-white px-3 py-2.5 rounded-lg transition"
+          />
+          <UploadImagem onUpload={(url) => atualizarCampo("imagem", url)} />
+        </div>
+        {form.imagem && (
+          <img
+            src={form.imagem}
+            alt="Prévia"
+            className="mt-3 w-32 h-20 object-cover rounded-lg border border-gray-800"
+          />
+        )}
       </div>
 
       <div>

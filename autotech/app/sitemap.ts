@@ -36,14 +36,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   { url: `${BASE_URL}/ferramentas/conversor`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.85 },
 ];
   try {
-    // Páginas dinâmicas (artigos)
+       // Páginas dinâmicas (artigos)
     const artigos = await buscarArtigos();
-    const paginasArtigos: MetadataRoute.Sitemap = artigos.map((artigo) => ({
-      url: `${BASE_URL}/artigo/${artigo.slug}`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.7,
-    }));
+    const paginasArtigos: MetadataRoute.Sitemap = artigos.map((artigo) => {
+      // Prioridade baseada em visualizações
+      const visualizacoes = Number(artigo.visualizacoes) || 0;
+      let prioridade = 0.6;
+
+      if (visualizacoes > 1000) prioridade = 0.9;
+      else if (visualizacoes > 500) prioridade = 0.8;
+      else if (visualizacoes > 100) prioridade = 0.7;
+
+      return {
+        url: `${BASE_URL}/artigo/${artigo.slug}`,
+        lastModified: new Date(artigo.criado_em || new Date()),
+        changeFrequency: "weekly" as const,
+        priority: prioridade,
+      };
+    });
 
     return [...paginasEstaticas, ...paginasArtigos];
   } catch (error) {
