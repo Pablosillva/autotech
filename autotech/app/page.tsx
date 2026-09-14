@@ -7,7 +7,7 @@ import PopularTools from "./components/PopularTools";
 export default function Home() {
   return (
     <main className="min-h-screen bg-gray-950 text-white">
-      <div className="max-w-7xl mx-auto px-4 py-10 grid lg:grid-cols-3 gap-8 items-start">
+      <div className="max-w-7xl mx-auto px-4 py-3 grid lg:grid-cols-3 gap-6 items-start">
         <div className="lg:col-span-2">
           {/* HERO */}
           <section className="relative overflow-hidden rounded-xl">
@@ -36,17 +36,17 @@ export default function Home() {
                 mais para você cuidar do seu veículo com segurança e economia.
               </p>
 
-              <div className="mt-8 flex items-center bg-white rounded-lg overflow-hidden max-w-2xl">
-                <span className="pl-4 text-gray-500">🔍</span>
-                <input
-                  type="text"
-                  placeholder="Ex: código OBD2, troca de óleo, freio, suspensão..."
-                  className="flex-1 px-3 py-3 text-black outline-none text-sm"
-                />
-                <button className="bg-orange-500 hover:bg-orange-600 text-black font-semibold px-6 py-3 transition">
-                  Buscar
-                </button>
-              </div>
+              <div className="mt-10 flex items-center bg-white rounded-lg overflow-hidden max-w-2xl shadow-xl">
+  <span className="pl-5 text-gray-500 text-lg">🔍</span>
+  <input
+    type="text"
+    placeholder="Ex: código OBD2, troca de óleo, freio, suspensão..."
+    className="flex-1 px-4 py-4 text-black outline-none text-sm"
+  />
+  <button className="bg-orange-500 hover:bg-orange-600 text-black font-semibold px-8 py-4 transition">
+    Buscar
+  </button>
+</div>
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {["Mecânica", "OBD2", "Freios", "Óleo", "Suspensão", "Pintura", "Diagnóstico"].map(

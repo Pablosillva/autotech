@@ -1,6 +1,7 @@
 import { buscarArtigo } from "../../services/api";
 import MarkdownRenderer from "../../components/MarkdownRenderer";
 import ShareButtons from "../../components/ShareButtons";
+import ContadorVisualizacao from "../../components/ContadorVisualizacao";
 
 export default async function ArtigoPage({
   params,
@@ -41,7 +42,10 @@ export default async function ArtigoPage({
           <span>✍️ {artigo.autor}</span>
           <span>📅 {artigo.data}</span>
           <span>🕐 {artigo.tempo_leitura}</span>
-          <span>👁 {artigo.visualizacoes}</span>
+          <ContadorVisualizacao 
+  slug={artigo.slug} 
+  visualizacoesInicial={Number(artigo.visualizacoes) || 0} 
+/>
         </div>
 
         <div className="mt-8 rounded-xl overflow-hidden">

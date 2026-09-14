@@ -1,13 +1,24 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function Header() {
   const { usuario } = useAuth();
+  const [busca, setBusca] = useState("");
+  const router = useRouter();
+
+  const handleBusca = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!busca.trim()) return;
+    router.push(`/busca?q=${encodeURIComponent(busca.trim())}`);
+    setBusca("");
+  };
 
   return (
     <header className="bg-black text-white border-b border-gray-800">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-8">
+      <div className="-7xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
         {/* LOGO */}
         <a href="/" className="flex items-center gap-2 shrink-0">
           <div className="bg-orange-500 p-2 rounded-lg">
@@ -31,7 +42,7 @@ export default function Header() {
           </a>
           <a href="/categoria/mecanica" className="hover:text-orange-500 transition">Mecânica</a>
           <a href="/categoria/funilaria" className="hover:text-orange-500 transition">Funilaria</a>
-          <a href="/categoria/diagnostico" className="hover:text-orange-500 transition">Diagnóstico</a>
+          <a href="/categoria/diagnosmax-wtico" className="hover:text-orange-500 transition">Diagnóstico</a>
           <a href="/categoria/carros" className="hover:text-orange-500 transition">Carros</a>
           <a href="/categoria/ferramentas" className="hover:text-orange-500 transition">Ferramentas</a>
           <a href="/categoria/noticias" className="hover:text-orange-500 transition">Notícias</a>
@@ -40,14 +51,19 @@ export default function Header() {
 
         {/* BUSCA E BOTÕES */}
         <div className="flex items-center gap-3 shrink-0">
-          <div className="hidden md:flex items-center bg-gray-900 border border-gray-700 rounded-lg px-3 py-1.5 w-56">
+          <form
+            onSubmit={handleBusca}
+            className="hidden md:flex items-center bg-gray-900 border border-gray-700 rounded-lg px-3 py-1.5 w-56"
+          >
             <span className="text-gray-500 text-sm">🔍</span>
             <input
               type="text"
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
               placeholder="Buscar no AutoTech..."
               className="bg-transparent outline-none text-sm text-white placeholder-gray-500 ml-2 w-full"
             />
-          </div>
+          </form>
 
           {usuario ? (
             <a

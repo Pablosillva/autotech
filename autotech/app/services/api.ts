@@ -181,3 +181,41 @@ export async function deletarArtigo(
     throw new Error(erro.erro || "Erro ao deletar artigo");
   }
 }
+
+export async function buscarArtigosPorTexto(q: string): Promise<Artigo[]> {
+  if (!q.trim()) return [];
+
+  try {
+    const resposta = await fetch(
+      `${API_URL}/artigos/busca?q=${encodeURIComponent(q)}`,
+      { cache: "no-store" }
+    );
+
+    if (!resposta.ok) {
+      return [];
+    }
+
+    return resposta.json();
+  } catch (erro) {
+    console.error("Falha ao buscar artigos:", erro);
+    return [];
+  }
+}
+
+export async function incrementarVisualizacao(slug: string): Promise<number> {
+  try {
+    const resposta = await fetch(`${API_URL}/artigos/${slug}/visualizar`, {
+      method: "POST",
+    });
+
+    if (!resposta.ok) {
+      return 0;
+    }
+
+    const dados = await resposta.json();
+    return dados.visualizacoes || 0;
+  } catch (erro) {
+    console.error("Erro ao incrementar visualização:", erro);
+    return 0;
+  }
+}

@@ -183,3 +183,59 @@ export async function deletarArtigo(req: Request, res: Response) {
     res.status(500).json({ erro: "Erro ao deletar artigo" });
   }
 }
+
+// GET /artigos/busca?q=termo
+export async function buscarArtigosPorTexto(req: Request, res: Response) {
+  try {
+    const { q } = req.query;
+
+    // Validação: termo obrigatório
+    if (!q || typeof q !== "string" || q.trim().length === 0) {
+      return res.json([]);
+    }
+
+    // Adiciona % para busca "contém"
+    const termo = `%${q.trim()}%`;
+
+    const resultado = await pool.query(
+      `SELECT * FROM artigos
+       WHERE titulo ILIKE $1
+          OR descricao ILIKE $1
+          OR conteudo ILIKE $1
+       ORDER BY criado_em DESC`,
+      [termo]
+    );
+
+    res.json(resultado.rows);
+  } catch (erro) {
+    console.error("Erro na busca:", erro);
+    res.status(500).json({ erro: "Erro ao buscar artigos" });
+  }
+}
+
+// POST /artigos/:slug/visualizar
+export async function incrementarVisualizacao(req: Request, res: Response) {
+  try {
+    const { slug } = req.params;
+
+    const resultado = await pool.query(
+      `UPDATE artigos
+       SET visualizacoes = COALESCE(visualizacoes, 0) + 1
+       WHERE slug = $1
+       RETURNING id, slug, visualizacoes`,
+      [slug]
+    );
+
+    if (resultado.rows.length === 0) {
+      return res.status(404).json({ erro: "Artigo não encontrado" });
+    }
+
+    res.json({
+      slug: resultado.rows[0].slug,
+      visualizacoes: resultado.rows[0].visualizacoes,
+    });
+  } catch (erro) {
+    console.error("Erro ao incrementar visualização:", erro);
+    res.status(500).json({ erro: "Erro ao incrementar visualização" });
+  }
+}
