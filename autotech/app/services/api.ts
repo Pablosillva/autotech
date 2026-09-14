@@ -219,3 +219,16 @@ export async function incrementarVisualizacao(slug: string): Promise<number> {
     return 0;
   }
 }
+
+export async function buscarArtigosRelacionados(
+  slugAtual: string,
+  categoria: string
+): Promise<Artigo[]> {
+  try {
+    const artigos = await buscarArtigos(categoria);
+    return artigos.filter((a) => a.slug !== slugAtual).slice(0, 3);
+  } catch (erro) {
+    console.error("Erro ao buscar artigos relacionados:", erro);
+    return [];
+  }
+}

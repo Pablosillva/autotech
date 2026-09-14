@@ -1,4 +1,4 @@
-import { buscarArtigo } from "../../services/api";
+import { buscarArtigo, buscarArtigosRelacionados } from "../../services/api";
 import MarkdownRenderer from "../../components/MarkdownRenderer";
 import ShareButtons from "../../components/ShareButtons";
 import ContadorVisualizacao from "../../components/ContadorVisualizacao";
@@ -27,6 +27,11 @@ export default async function ArtigoPage({
     );
   }
 
+  const relacionados = await buscarArtigosRelacionados(
+    artigo.slug,
+    artigo.categoria
+  );
+
   return (
     <main className="min-h-screen bg-gray-950 text-white">
       <article className="max-w-3xl mx-auto px-4 py-12">
@@ -42,10 +47,10 @@ export default async function ArtigoPage({
           <span>✍️ {artigo.autor}</span>
           <span>📅 {artigo.data}</span>
           <span>🕐 {artigo.tempo_leitura}</span>
-          <ContadorVisualizacao 
-  slug={artigo.slug} 
-  visualizacoesInicial={Number(artigo.visualizacoes) || 0} 
-/>
+          <ContadorVisualizacao
+            slug={artigo.slug}
+            visualizacoesInicial={Number(artigo.visualizacoes) || 0}
+          />
         </div>
 
         <div className="mt-8 rounded-xl overflow-hidden">
@@ -59,7 +64,38 @@ export default async function ArtigoPage({
         <div className="mt-10">
           <MarkdownRenderer conteudo={artigo.conteudo} />
         </div>
-
+        {relacionados.length > 0 && (
+          <section className="mt-16 pt-10 border-t border-gray-800">
+            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+              📚 Artigos relacionados
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {relacionados.map((rel) => (
+                <a
+                  key={rel.slug}
+                  href={`/artigo/${rel.slug}`}
+                  className="group bg-gray-900 border border-gray-800 hover:border-orange-500 rounded-xl overflow-hidden transition-all hover:-translate-y-1"
+                >
+                  <div className="h-32 bg-gray-800 overflow-hidden">
+                    <img
+                      src={rel.imagem}
+                      alt={rel.titulo}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-white text-sm font-semibold leading-snug group-hover:text-orange-500 transition line-clamp-2">
+                      {rel.titulo}
+                    </h3>
+                    <span className="text-gray-500 text-xs mt-2 block">
+                      🕐 {rel.tempo_leitura}
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
         <ShareButtons titulo={artigo.titulo} slug={artigo.slug} />
 
         <a
