@@ -3,11 +3,12 @@ import CategoriesSection from "./components/CategoriesSection";
 import Sidebar from "./components/Sidebar";
 import FeaturedArticles from "./components/FeaturedArticles";
 import PopularTools from "./components/PopularTools";
+import FadeIn from "./components/FadeIn";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-gray-950 text-white">
-      <div className="max-w-7xl mx-auto px-4 py-3 grid lg:grid-cols-3 gap-6 items-start">
+      <div className="max-w-7xl mx-auto px-4 py-8 md:py-12 grid lg:grid-cols-3 gap-8 md:gap-10 items-start">
         <div className="lg:col-span-2">
           {/* HERO */}
           <section className="relative overflow-hidden rounded-xl">
@@ -37,16 +38,16 @@ export default function Home() {
               </p>
 
               <div className="mt-10 flex items-center bg-white rounded-lg overflow-hidden max-w-2xl shadow-xl">
-  <span className="pl-5 text-gray-500 text-lg">🔍</span>
-  <input
-    type="text"
-    placeholder="Ex: código OBD2, troca de óleo, freio, suspensão..."
-    className="flex-1 px-4 py-4 text-black outline-none text-sm"
-  />
-  <button className="bg-orange-500 hover:bg-orange-600 text-black font-semibold px-8 py-4 transition">
-    Buscar
-  </button>
-</div>
+                <span className="pl-5 text-gray-500 text-lg">🔍</span>
+                <input
+                  type="text"
+                  placeholder="Ex: código OBD2, troca de óleo, freio, suspensão..."
+                  className="flex-1 px-4 py-4 text-black outline-none text-sm"
+                />
+                <button className="bg-orange-500 hover:bg-orange-600 text-black font-semibold px-8 py-4 transition">
+                  Buscar
+                </button>
+              </div>
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {["Mecânica", "OBD2", "Freios", "Óleo", "Suspensão", "Pintura", "Diagnóstico"].map(
@@ -63,9 +64,15 @@ export default function Home() {
             </div>
           </section>
 
-          <CategoriesSection />
-          <FeaturedArticles />
-          <PopularTools />
+          <FadeIn>
+            <CategoriesSection />
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <FeaturedArticles />
+          </FadeIn>
+          <FadeIn delay={0.2}>
+            <PopularTools />
+          </FadeIn>
         </div>
 
         <div className="lg:col-span-1">
