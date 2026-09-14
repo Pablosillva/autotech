@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { AuthProvider } from "./contexts/AuthContext";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,22 +23,38 @@ export const metadata: Metadata = {
   verification: {
     google: "JGTBz0Q25olmwGq1mocPS0OO5XMBGrtLMhunmHwdUfs",
   },
-  };
+};
 
-  export default function RootLayout({
-    children,
-  }: Readonly<{
-    children: React.ReactNode;
-  }>) {
-    return (
-      <html lang="pt-BR">
-        <body className={`${geistSans.variable} ${geistMono.variable}`}>
-          <AuthProvider>
-            <Header />
-            {children}
-            <Footer />
-          </AuthProvider>
-        </body>
-      </html>
-    );
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="pt-BR">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable}`}
+        suppressHydrationWarning
+      >
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-X2QDV2F3WJ');
+          `}
+        </Script>
+
+        <AuthProvider>
+          <Header />
+          {children}
+          <Footer />
+        </AuthProvider>
+      </body>
+    </html>
+  );
 }
