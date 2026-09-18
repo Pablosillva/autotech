@@ -64,6 +64,7 @@ export default async function ArtigoPage({
         <div className="mt-10">
           <MarkdownRenderer conteudo={artigo.conteudo} />
         </div>
+
         {relacionados.length > 0 && (
           <section className="mt-16 pt-10 border-t border-gray-800">
             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
@@ -96,6 +97,7 @@ export default async function ArtigoPage({
             </div>
           </section>
         )}
+
         <ShareButtons titulo={artigo.titulo} slug={artigo.slug} />
 
         <a

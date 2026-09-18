@@ -23,6 +23,9 @@ export const metadata: Metadata = {
   verification: {
     google: "JGTBz0Q25olmwGq1mocPS0OO5XMBGrtLMhunmHwdUfs",
   },
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
@@ -37,7 +40,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+          src="https://www.googletagmanager.com/gtag/js?id=G-X2QDV2F3WJ"
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
